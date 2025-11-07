@@ -47,13 +47,6 @@ Note: For demo purposes requests must include header `x-user-id: demo-user` (fro
 - Checkout:
   `curl -X POST http://localhost:5000/api/checkout -H "Content-Type: application/json" -H "x-user-id: demo-user" -d '{"name":"Test","email":"a@b.com"}'`
 
-## Demo video script (1-2 minutes)
-1. Intro (5s): “Hi, I’m Mohammed — quick demo of Mock E-Com Cart.”
-2. Show products grid (10s): Click “Add” on 2 items.
-3. Show Cart (20s): Show items, update quantity, remove one item.
-4. Checkout (20s): Enter name/email → click Checkout, show receipt modal.
-5. Backend sanity (10s): Show terminal hitting `/api/cart` and checkout return.
-6. Closing (5s): “Repo contains instructions to run — link in description.”
 
 ## Notes & Bonus
 - Cart is persisted in MongoDB per `x-user-id`.
