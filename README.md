@@ -1,186 +1,54 @@
-## 🧾 **README.md**
+# Mock E-Com Cart (MERN) — Vibe Commerce screening
 
-```markdown
-# 🛍️ Mock E-Commerce Cart — Vibe Commerce Internship Assignment
+## Overview
+A simple MERN stack shopping cart app that supports product listing, cart management, and a mock checkout (receipt). Useful for screening/testing full-stack skills.
 
-This is a **Full Stack Shopping Cart Application** built using the **MERN Stack (MongoDB, Express, React, Node.js)** for the Vibe Commerce internship screening task.
+## Repo layout
+- /backend — Express + Mongoose API
+- /frontend — React + Vite + Tailwind frontend
 
-It includes product listing, add/remove cart functionality, dynamic totals, and a mock checkout system — all integrated via REST APIs.
+## Requirements
+- Node >= 18
+- MongoDB (local or Atlas)
 
----
+## Setup — Backend
+1. cd backend
+2. copy `.env.example` to `.env` and set `MONGO_URI` if using Atlas.
+3. `npm install`
+4. `npm run seed` — inserts mock products
+5. `npm run dev` — starts backend on port 5000 (by default)
 
-## 🚀 Live Demo / Video
+APIs:
+- `GET /api/products`
+- `GET /api/cart`
+- `POST /api/cart` { productId, qty }
+- `PATCH /api/cart/:id` { qty }
+- `DELETE /api/cart/:id`
+- `POST /api/checkout` { name, email }
 
-🎥 **Demo Video:** [Watch Demo Video](https://drive.google.com/file/d/1gbge42EKXe8zXLscaeOphX91c5M2t64S/view?usp=sharing)
+Note: For demo purposes requests must include header `x-user-id: demo-user` (frontend sets this automatically).
 
-📂 **GitHub Repository:** https://github.com/misbah1408/mock-ecom-cart
+## Setup — Frontend
+1. cd frontend
+2. `npm install`
+3. create `.env` with `VITE_API_URL=http://localhost:5000/api` (or your backend URL)
+4. `npm run dev` — open displayed URL (default: http://localhost:5173)
 
----
+## Quick curl tests
+- List products:
+  `curl http://localhost:5000/api/products`
 
-## 🧠 Tech Stack
+- Add to cart:
+  `curl -X POST http://localhost:5000/api/cart -H "Content-Type: application/json" -H "x-user-id: demo-user" -d '{"productId":"<PRODUCT_ID>","qty":1}'`
 
-| Layer | Technology |
-|-------|-------------|
-| Frontend | React + Vite + Tailwind CSS |
-| Backend | Node.js + Express |
-| Database | MongoDB (local or Atlas) |
-| Communication | REST API |
-| Styling | Tailwind CSS (Responsive) |
+- Get cart:
+  `curl http://localhost:5000/api/cart -H "x-user-id: demo-user"`
 
----
+- Checkout:
+  `curl -X POST http://localhost:5000/api/checkout -H "Content-Type: application/json" -H "x-user-id: demo-user" -d '{"name":"Test","email":"a@b.com"}'`
 
-## ⚙️ Features
 
-✅ Product listing grid with “Add to Cart” buttons  
-✅ Dynamic cart with quantity update and item removal  
-✅ Real-time total calculation  
-✅ Mock checkout form (name/email) → receipt modal  
-✅ Responsive design for all screen sizes  
-✅ MongoDB persistence (cart & products)  
-✅ RESTful API integration between frontend and backend  
-
----
-
-## 🧩 Folder Structure
-
-```
-
-mock-ecom-cart/
-│
-├── backend/
-│   ├── config/
-│   ├── models/
-│   ├── routes/
-│   ├── seed/
-│   └── server.js
-│
-├── frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── components/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── vite.config.mjs
-│   ├── tailwind.config.cjs
-│   └── postcss.config.cjs
-│
-└── README.md
-
-````
-
----
-
-## 🛠️ Setup Instructions
-
-### 🧮 Backend Setup
-1. Navigate to the backend folder:
-   ```bash
-   cd backend
-   npm install
-````
-
-2. Create a `.env` file:
-
-   ```
-   PORT=5000
-   MONGO_URI=mongodb://localhost:27017/mock-ecom
-   ```
-3. Seed mock products:
-
-   ```bash
-   npm run seed
-   ```
-4. Start the server:
-
-   ```bash
-   npm run dev
-   ```
-
-   ✅ Backend runs on: **[http://localhost:5000](http://localhost:5000)**
-
----
-
-### 🖥️ Frontend Setup
-
-1. Navigate to the frontend folder:
-
-   ```bash
-   cd frontend
-   npm install
-   ```
-2. Create `.env` file:
-
-   ```
-   VITE_API_URL=http://localhost:5000/api
-   ```
-3. Run the React app:
-
-   ```bash
-   npm run dev
-   ```
-
-   ✅ Frontend runs on: **[http://localhost:5173](http://localhost:5173)**
-
----
-
-## 📡 API Routes
-
-| Method | Endpoint        | Description                              |
-| ------ | --------------- | ---------------------------------------- |
-| GET    | `/api/products` | Fetch all products                       |
-| POST   | `/api/cart`     | Add product to cart `{ productId, qty }` |
-| GET    | `/api/cart`     | Fetch current cart and total             |
-| PATCH  | `/api/cart/:id` | Update quantity                          |
-| DELETE | `/api/cart/:id` | Remove item from cart                    |
-| POST   | `/api/checkout` | Mock checkout → returns receipt          |
-
----
-
-## 🖼️ Screenshots
-
-### 🏠 Home Page (Product Grid)
-
-![Product Grid](./screenshots/home.png)
-
-### 🛒 Cart Section
-
-![Cart Page](./screenshots/cart.png)
-
-### 💳 Checkout Modal (Mock Receipt)
-
-![Checkout Receipt](./screenshots/checkout.png)
-
----
-
-## 🧾 Demo Flow
-
-1. Open the app → view product list fetched from backend.
-2. Click **Add to Cart** → item appears in cart.
-3. Update quantity / remove items.
-4. Enter name and email → click **Checkout**.
-5. Receipt modal appears with:
-
-   * Ordered items
-   * Total amount
-   * Timestamp
-
----
-
-## 🔐 Bonus Features (Optional Enhancements)
-
-* ✅ Cart persistence per mock user (`x-user-id`)
-* ✅ Error handling with response messages
-* ⚙️ Optional FakeStore API integration
-* ⚙️ Ready for real payment gateway integration (Stripe/Razorpay)
-
----
-
-## 👨‍💻 Developer
-
-**Mohammed Misba**
-📧 [misbahmohammed00008@gmail.com](mailto:misbahmohammed00008@gmail.com)
-🌐 [https://github.com/misbah1408](https://github.com/misbah1408)
-💼 Aspiring Full Stack Developer | MERN | Python | Java
-
----
+## Notes & Bonus
+- Cart is persisted in MongoDB per `x-user-id`.
+- Error handling present for missing payloads.
+- Can be extended: authentication, Stripe payments, more validations, tests.
